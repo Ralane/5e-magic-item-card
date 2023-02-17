@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import Textfit from './textfit';
-import staff from './assets/staff.jpeg';
 import classnames from 'classnames';
 import card from './assets/magic-item.png';
 import cardDefault from './assets/card--default.png';
@@ -14,7 +13,7 @@ const cards = {
   long: cardLong,
 }
 
-const noop = () => {};
+const noop = () => { };
 export default class Card extends Component {
   static propTypes = {}
 
@@ -22,7 +21,7 @@ export default class Card extends Component {
     cardType: 'default',
   }
 
-  renderField(property, props={}) {
+  renderField(property, props = {}) {
     return (
       <Textfit
         className={`card__${property}`}
@@ -30,7 +29,7 @@ export default class Card extends Component {
         max={1500}
         forceSingleModeWidth={false}
         mode='single'
-        { ...props }
+        {...props}
       >
         <ReactMarkdown source={this.props[property]} />
       </Textfit>
@@ -51,15 +50,15 @@ export default class Card extends Component {
     return (
       <div className={containerClass} ref={onRef || noop}>
         <div className="card__icon">
-          <img src={imagePreviewUrl || staff} alt="icon" />
+          <img src={imagePreviewUrl} alt="icon" />
         </div>
         <img src={cards[cardType]} className="card__img" alt="card" />
         <div className={`card__attunement ${needsAttunement}`} />
-        <div className="card__type_title" style={{"font-size": "110rem"}}><div style={{"display": "block"}}><div>Type</div></div></div>
-        <div className="card__attunement_title" style={{"font-size": "110rem"}}><div style={{"display": "block"}}><div>Requires Attunement?</div></div></div>
-        <div className="card__attunement_title_yes" style={{"font-size": "82rem"}}><div style={{"display": "block"}}><div>Yes</div></div></div>
-        <div className="card__attunement_title_no" style={{"font-size": "82rem"}}><div style={{"display": "block"}}><div>No</div></div></div>
-        <div className="card__value_unit" style={{"font-size": "90rem"}}><div style={{"display": "block"}}><div>GP</div></div></div>
+        <div className="card__type_title" style={{ "font-size": "110rem" }}><div style={{ "display": "block" }}><div>Type</div></div></div>
+        <div className="card__attunement_title" style={{ "font-size": "110rem" }}><div style={{ "display": "block" }}><div>Requires Attunement?</div></div></div>
+        <div className="card__attunement_title_yes" style={{ "font-size": "82rem" }}><div style={{ "display": "block" }}><div>Yes</div></div></div>
+        <div className="card__attunement_title_no" style={{ "font-size": "82rem" }}><div style={{ "display": "block" }}><div>No</div></div></div>
+        <div className="card__value_unit" style={{ "font-size": "90rem" }}><div style={{ "display": "block" }}><div>GP</div></div></div>
         {this.renderField('title')}
         {this.renderField('type')}
         {this.renderField('value', {
