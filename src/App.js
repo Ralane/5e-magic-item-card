@@ -18,7 +18,7 @@ const onChange = property => function({ target }) {
 const onChangeCardTemplate = property => function({ target }) {
   this.setState({
     ['title']: target.value,
-    ['description']: magicItems['Magic Items']['Magic Item Descriptions'][target.value].raw,
+    ['description']: magicItems[target.value].raw,
   }, this.saveState);
 }
 
@@ -26,7 +26,7 @@ const localStorage = window.localStorage;
 
 const defaultState = {
   cartType: 'default',
-  description: magicItems['Magic Items']['Magic Item Descriptions']['Adamantine Armor'],
+  description: magicItems['Adamantine Armor'],
   needsAttunement: false,
   title: 'Adamantine Armor',
   type: 'Uncommon',
@@ -113,7 +113,7 @@ class CardEditor extends Component {
   }
 
   get cardTemplateOptions() {
-    return ['', ...Object.keys(magicItems['Magic Items']['Magic Item Descriptions'])];
+    return ['', ...Object.keys(magicItems)];
   }
 
   render() {
