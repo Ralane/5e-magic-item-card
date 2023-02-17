@@ -1,10 +1,9 @@
 {
   "main.css": "static/css/main.9580d0a8.css",
   "main.css.map": "static/css/main.9580d0a8.css.map",
-  "main.js": "static/js/main.5a66bf31.js",
-  "main.js.map": "static/js/main.5a66bf31.js.map",
+  "main.js": "static/js/main.be1c54e2.js",
+  "main.js.map": "static/js/main.be1c54e2.js.map",
   "static\\media\\card--default.png": "static/media/card--default.d6e94ac4.png",
   "static\\media\\card--long.png": "static/media/card--long.ddb9b763.png",
-  "static\\media\\magic-item.png": "static/media/magic-item.a03aaa91.png",
-  "static\\media\\staff.jpeg": "static/media/staff.39063043.jpeg"
+  "static\\media\\magic-item.png": "static/media/magic-item.a03aaa91.png"
 }
