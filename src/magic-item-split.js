@@ -16,10 +16,7 @@ const regex = /\*(?<type>.+?)(?<!\(),(?![\w\s]*[\)])[\s]*(?<rarity>.+?)[\s]*(?<a
 var cleanedJson = {};
 for(item in json['Magic Items']['Magic Item Descriptions']) {
     const raw = json['Magic Items']['Magic Item Descriptions'][item].raw;
-    console.log(regex.dotAll);
-    console.log(raw);
     const [match, type, rarity, attunement, description] = regex.exec(raw.toString());
-    console.log(`Type: ${type}, Rarity: ${rarity}, Attunement: ${attunement}, Description: ${description}`);
     cleanedJson = {...cleanedJson, [item]: {
         raw: raw,
         type: type.trim(),

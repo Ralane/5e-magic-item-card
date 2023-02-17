@@ -6,28 +6,40 @@ import './App.css';
 import debounce from 'lodash.debounce';
 import classnames from 'classnames';
 import magicItems from './assets/magic-items.json';
+import Select from 'react-select';
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
 
   this.setState({
     [property]: value,
+    'itemTemplatePreview': ''
   }, this.saveState);
 }
 
 const onChangeCardTemplate = property => function({ target }) {
-  this.setState({
-    ['title']: target.value,
-    ['description']: magicItems[target.value].raw,
-  }, this.saveState);
+  if(target.value) {
+    this.setState({
+      ['itemTemplatePreview']: target.value,
+      ['title']: target.value,
+      ['type']: magicItems[target.value].type,
+      ['needsAttunement']: magicItems[target.value].attunement,
+      ['description']: magicItems[target.value].description,
+    }, this.saveState);
+  } else {
+    this.setState({
+      'itemTemplatePreview': ''
+    }, this.saveState);
+  }
 }
 
 const localStorage = window.localStorage;
 
 const defaultState = {
-  cartType: 'default',
+  cardType: 'default',
   description: magicItems['Adamantine Armor'],
   needsAttunement: false,
+  itemTemplatePreview: '',
   title: 'Adamantine Armor',
   type: 'Uncommon',
   imagePreviewUrl: undefined,
@@ -52,6 +64,7 @@ class CardEditor extends Component {
   state = {
     cardType: 'default',
     title: '',
+    itemTemplatePreview: '',
     type: '',
     description: '',
     value: '',
@@ -119,6 +132,7 @@ class CardEditor extends Component {
   render() {
     const {
       cardType,
+      itemTemplatePreview,
       description,
       href,
       needsAttunement,
@@ -129,16 +143,16 @@ class CardEditor extends Component {
     return (
       <div className="container">
         <div className="fields">
-          <select value={cardType} onChange={this.onChangeCardType}>
+          <Select value={cardType} onChange={this.onChangeCardType}>
             {this.cardTypeOptions.map(option => (
               <option value={option}>{option}</option>
             ))}
-          </select>
-          <select value={''} onChange={this.onChangeCardTemplate}>
+          </Select>
+          <Select value={itemTemplatePreview || ''} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template '}>
             {this.cardTemplateOptions.map(option => (
               <option value={option}>{option}</option>
             ))}
-          </select>
+          </Select>
           <input value={title} onChange={this.onChangeTitle} />
           <input value={type} onChange={this.onChangeType} />
           <input value={value} onChange={this.onChangeValue} />
