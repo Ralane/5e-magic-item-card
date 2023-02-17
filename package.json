@@ -6,6 +6,7 @@
     "classnames": "^2.2.6",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash.debounce": "^4.0.8",
+    "md-2-json": "^2.0.0",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "split": "node ./src/magic-item-split.js"
   },
   "devDependencies": {
     "gh-pages": "^1.2.0"

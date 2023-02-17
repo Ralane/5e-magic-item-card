@@ -1,0 +1,3 @@
+[submodule "src/assets/cc-srd5"]
+	path = src/assets/cc-srd5
+	url = git@github.com:Ralane/cc-srd5.git
