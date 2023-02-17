@@ -5,9 +5,9 @@ var mdContent = fs.readFileSync('./cc-srd5/magic-items.md').toString();
 
 const json = md2json.parse(mdContent);
 
-const regex = /\*(?<type>.+),\s*(?<rarity>[^\s()]+)\s*(?<attunement>\(requires\s*\[attunement]\(#section-attunement\)\))?\s*\*(?<description>.+)/si;
+const regex = /\*(?<type>.+?)(?<!\(),(?![\w\s]*[\)])[\s]*(?<rarity>.+?)[\s]*(?<attunement>\(requires \[attunement]\(#section-attunement\).*?\))?[\s]*\*(?<description>.+)/is
 
-/*
+/*  
  * Magic item formatting generally follows this pattern:
  * ### Title
  * *Item Type, rarity, optional: (requires [attunement](#section-attunement))*
@@ -16,14 +16,16 @@ const regex = /\*(?<type>.+),\s*(?<rarity>[^\s()]+)\s*(?<attunement>\(requires\s
 var cleanedJson = {};
 for(item in json['Magic Items']['Magic Item Descriptions']) {
     const raw = json['Magic Items']['Magic Item Descriptions'][item].raw;
-    const regexResults = regex.exec(raw);
-    console.log(JSON.stringify(regexResults));
+    console.log(regex.dotAll);
+    console.log(raw);
+    const [match, type, rarity, attunement, description] = regex.exec(raw.toString());
+    console.log(`Type: ${type}, Rarity: ${rarity}, Attunement: ${attunement}, Description: ${description}`);
     cleanedJson = {...cleanedJson, [item]: {
         raw: raw,
-        type: regexResults.groups['type'],
-        rarity: regexResults.groups['rarity'],
-        attunement: !!regexResults.groups['attunement'],
-        description: regexResults.groups['description'],
+        type: type.trim(),
+        rarity: rarity.trim(),
+        attunement: !!attunement,
+        description: description.trim(),
     }}
 }
 
