@@ -5,6 +5,7 @@ import Card from './Card';
 import './App.css';
 import debounce from 'lodash.debounce';
 import classnames from 'classnames';
+import magicItems from './assets/magic-items.json';
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -14,17 +15,20 @@ const onChange = property => function({ target }) {
   }, this.saveState);
 }
 
+const onChangeCardTemplate = property => function({ target }) {
+  this.setState({
+    ['title']: target.value,
+    ['description']: magicItems['Magic Items']['Magic Item Descriptions'][target.value].raw,
+  }, this.saveState);
+}
+
 const localStorage = window.localStorage;
-
-const defaultTitle = 'Circlet of Blasting'
-
-const defaultDesc = `While wearing this circlet, you can use an action to cast the Scorching Ray spell with it. When you make the spell's attacks, you do so with an **Attack bonus of +5**. The circlet can't be used this way again until the next dawn.`
 
 const defaultState = {
   cartType: 'default',
-  description: defaultDesc,
+  description: magicItems['Magic Items']['Magic Item Descriptions']['Adamantine Armor'],
   needsAttunement: false,
-  title: 'Gauntlet of Thunderblasting',
+  title: 'Adamantine Armor',
   type: 'Uncommon',
   imagePreviewUrl: undefined,
   value: '100',
@@ -62,6 +66,7 @@ class CardEditor extends Component {
     this.onChangeValue = onChange('value').bind(this);
     this.onChangeNeedsAttunement = onChange('needsAttunement').bind(this);
     this.onChangeCardType = onChange('cardType').bind(this);
+    this.onChangeCardTemplate = onChangeCardTemplate('cardTemplate').bind(this);
   }
 
   componentDidMount() {
@@ -107,6 +112,10 @@ class CardEditor extends Component {
     ];
   }
 
+  get cardTemplateOptions() {
+    return ['', ...Object.keys(magicItems['Magic Items']['Magic Item Descriptions'])];
+  }
+
   render() {
     const {
       cardType,
@@ -122,6 +131,11 @@ class CardEditor extends Component {
         <div className="fields">
           <select value={cardType} onChange={this.onChangeCardType}>
             {this.cardTypeOptions.map(option => (
+              <option value={option}>{option}</option>
+            ))}
+          </select>
+          <select value={''} onChange={this.onChangeCardTemplate}>
+            {this.cardTemplateOptions.map(option => (
               <option value={option}>{option}</option>
             ))}
           </select>
