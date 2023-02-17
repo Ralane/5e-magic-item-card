@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var md2json = require('md-2-json');
-var mdContent = fs.readFileSync('./src/assets/cc-srd5/magic-items.md').toString();
+var mdContent = fs.readFileSync('./cc-srd5/magic-items.md').toString();
 
 var json = md2json.parse(mdContent);
 
