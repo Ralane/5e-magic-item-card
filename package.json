@@ -10,10 +10,10 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-markdown": "^3.3.4",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^1.1.4",
     "react-textfit": "^1.1.0"
   },
-  "homepage": "https://charlespwd.github.io/dnd-magic-item-card",
+  "homepage": "https://ralane.github.io/5e-magic-item-card",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
