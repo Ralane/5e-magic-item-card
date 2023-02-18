@@ -139,37 +139,40 @@ class CardEditor extends Component {
       selectRef,
     } = this.state;
     return (
-      <div className="container" onDrop={this.onDropImg}>
-        <div className="fields">
-          <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
-          <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
-          <input placeholder={'Title'} value={title} onChange={this.onChangeTitle} />
-          <input placeholder={'Type'} value={type} onChange={this.onChangeType} />
-          <input placeholder={'Value'} value={value} onChange={this.onChangeValue} />
-          <textarea placeholder={'Description'} value={description} onChange={this.onChangeDescription} />
-          <div>
-            <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
-            Needs Attunement?
+      <div>
+        <hr></hr>
+        <div className="container">
+          <div className="fields">
+            <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
+            <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
+            <input placeholder={'Title'} value={title} onChange={this.onChangeTitle} />
+            <input placeholder={'Type'} value={type} onChange={this.onChangeType} />
+            <input placeholder={'Value'} value={value} onChange={this.onChangeValue} />
+            <textarea placeholder={'Description'} value={description} onChange={this.onChangeDescription} />
+            <div>
+              <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
+              Needs Attunement?
+            </div>
+            <div>
+              <input
+                className="fileInput"
+                accept="image/*"
+                type="file"
+                onChange={this.onImageChange}
+              />
           </div>
-          <div>
-            <input
-              className="fileInput"
-              accept="image/*"
-              type="file"
-              onChange={this.onImageChange}
-            />
-        </div>
-          <div className="buttons">
-            <button onClick={this.onReset}>
-              Reset
-            </button>
-            <button onClick={this.onSave}>
-              Save
-            </button>
+            <div className="buttons">
+              <button onClick={this.onReset}>
+                Reset
+              </button>
+              <button onClick={this.onSave}>
+                Save
+              </button>
+            </div>
+            {href && <a download="image.png" href={href}>Download</a>}
           </div>
-          {href && <a download="image.png" href={href}>Download</a>}
+          <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
         </div>
-        <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
       </div>
     );
   }
