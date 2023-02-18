@@ -4,6 +4,8 @@ import cardDefault from './assets/card--default.png';
 import cardLong from './assets/card--long.png';
 import './Card.css';
 import TextFit from './textfit';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const cards = {
   default: cardDefault,
@@ -28,7 +30,7 @@ export default class Card extends Component {
         mode='single'
         {...props}
       >
-        {this.props[property]}
+        <ReactMarkdown children={this.props[property]} remarkPlugins={[remarkGfm]} />
       </TextFit>
     )
   }
