@@ -29,6 +29,7 @@ const defaultState = {
   imagePreviewUrl: undefined,
   value: '100',
   selectRef: null,
+  showSearch: false,
 };
 
 const saveData = debounce((key, data) => {
@@ -55,6 +56,7 @@ class CardEditor extends Component {
     value: '',
     needsAttunement: false,
     selectRef: null,
+    showSearch: false,
   }
 
   constructor() {
@@ -115,6 +117,12 @@ class CardEditor extends Component {
     }
   }
 
+  onSetSearch = () => {
+    this.setState({
+      showSearch: !this.state.showSearch
+    })
+  }
+
   get cardTypeOptions() {
     return [
       {value: 'default', label: 'default'},
@@ -138,6 +146,7 @@ class CardEditor extends Component {
       type,
       value,
       selectRef,
+      showSearch,
     } = this.state;
     return (
       <div className="container">
@@ -152,12 +161,17 @@ class CardEditor extends Component {
             <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
             Needs Attunement?
           </div>
+          <div>
           <input
             className="fileInput"
-            accept="image/png,image/jpeg"
+            accept="image/*"
             type="file"
             onChange={this.onImageChange}
           />
+                    <button onClick={this.onSetSearch}>
+          Show search page
+        </button>
+        </div>
           <div className="buttons">
             <button onClick={this.onReset}>
               Reset
@@ -168,6 +182,10 @@ class CardEditor extends Component {
           </div>
           {href && <a download="image.png" href={href}>Download</a>}
         </div>
+        {title && showSearch && 
+          <iframe src={`https://www.bing.com/images/search?q=${`5E ${title}`.replace(' ', '%20')}`} width={1000} height={500}>
+          </iframe>
+        }
         <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
       </div>
     );
