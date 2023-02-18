@@ -22,10 +22,10 @@ const localStorage = window.localStorage;
 
 const defaultState = {
   cardType: 'default',
-  description: magicItems['Adamantine Armor'],
-  needsAttunement: false,
+  description: magicItems['Adamantine Armor'].description,
+  needsAttunement: magicItems['Adamantine Armor'].attunement,
   title: 'Adamantine Armor',
-  type: 'Uncommon',
+  type: magicItems['Adamantine Armor'].rarity,
   imagePreviewUrl: undefined,
   value: '100',
   selectRef: null,
@@ -144,10 +144,10 @@ class CardEditor extends Component {
         <div className="fields">
           <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
           <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
-          <input value={title} onChange={this.onChangeTitle} />
-          <input value={type} onChange={this.onChangeType} />
-          <input value={value} onChange={this.onChangeValue} />
-          <textarea value={description} onChange={this.onChangeDescription} />
+          <input placeholder={'Title'} value={title} onChange={this.onChangeTitle} />
+          <input placeholder={'Type'} value={type} onChange={this.onChangeType} />
+          <input placeholder={'Value'} value={value} onChange={this.onChangeValue} />
+          <textarea placeholder={'Description'} value={description} onChange={this.onChangeDescription} />
           <div>
             <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
             Needs Attunement?
