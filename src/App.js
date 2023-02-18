@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce';
 import classnames from 'classnames';
 import magicItems from './assets/magic-items.json';
 import Select from 'react-select';
+import defaultIcon from './icons/delapouite/ancient-sword.svg';
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -26,7 +27,7 @@ const defaultState = {
   needsAttunement: magicItems[defaultItem].attunement,
   title: defaultItem,
   type: magicItems[defaultItem].rarity,
-  imagePreviewUrl: '../icons/delapouite/ancient-sword.svg',
+  imagePreviewUrl: defaultIcon,
   value: '100',
   selectRef: null,
   showSearch: false,
@@ -48,15 +49,7 @@ class CardEditor extends Component {
     localStorageKey: 'card',
   }
 
-  state = {
-    cardType: 'default',
-    title: '',
-    type: '',
-    description: '',
-    value: '',
-    needsAttunement: false,
-    selectRef: null,
-  }
+  state = defaultState;
 
   constructor() {
     super();

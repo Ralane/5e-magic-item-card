@@ -5,7 +5,7 @@ var listOfImages =[];
 const importAll = (r) => {
   return r.keys().map(r);
 }
-listOfImages = importAll(require.context('../icons', true, /\.(svg)$/));
+listOfImages = importAll(require.context('./icons', true, /\.(svg)$/));
 
 class IconSearch extends Component {
 
