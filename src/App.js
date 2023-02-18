@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import * as R from 'ramda';
 import html2canvas from 'html2canvas';
 import Card from './Card';
 import IconSearch from './IconSearch';
@@ -8,7 +7,6 @@ import debounce from 'lodash.debounce';
 import classnames from 'classnames';
 import magicItems from './assets/magic-items.json';
 import Select from 'react-select';
-
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -28,7 +26,7 @@ const defaultState = {
   needsAttunement: magicItems[defaultItem].attunement,
   title: defaultItem,
   type: magicItems[defaultItem].rarity,
-  imagePreviewUrl: '/static/media/ancient-sword.9c0fe268.svg',
+  imagePreviewUrl: '../icons/delapouite/ancient-sword.svg',
   value: '100',
   selectRef: null,
   showSearch: false,
@@ -179,7 +177,6 @@ class CardEditor extends Component {
           {href && <a download="image.png" href={href}>Download</a>}
         </div>
         <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
-        <IconSearch></IconSearch>
       </div>
     );
   }
@@ -212,7 +209,7 @@ class App extends Component {
         {printMode && <button className="download-all" onClick={this.onSave}>Create Image</button>}
         {href && <a className="download-cards" download="cards.png" href={href}>Download Image</a>}
         <div className={classes} ref={ref => this.ref = ref}>
-          {R.range(0, 9).map(i => (
+          {[...Array(9).keys()].map(i => (
             <CardEditor key={i} localStorageKey={`card${i}`} />
           ))}
         </div>

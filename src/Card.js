@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
-import Textfit from './textfit';
 import classnames from 'classnames';
-import card from './assets/magic-item.png';
 import cardDefault from './assets/card--default.png';
 import cardLong from './assets/card--long.png';
 import './Card.css';
+import TextFit from './textfit';
 
 const cards = {
   default: cardDefault,
@@ -23,7 +20,7 @@ export default class Card extends Component {
 
   renderField(property, props = {}) {
     return (
-      <Textfit
+      <TextFit
         className={`card__${property}`}
         autoResize
         max={1500}
@@ -31,8 +28,8 @@ export default class Card extends Component {
         mode='single'
         {...props}
       >
-        <ReactMarkdown source={this.props[property]} />
-      </Textfit>
+        {this.props[property]}
+      </TextFit>
     )
   }
 

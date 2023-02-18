@@ -1,5 +1,3 @@
-import { title } from 'process';
-import ReactDOM from 'react-dom';
 import { ReactSVG } from 'react-svg';
 import React, { Component, Fragment } from 'react';
 
