@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useRef } from 'react';
+import React, { Component, Fragment } from 'react';
 import * as R from 'ramda';
 import html2canvas from 'html2canvas';
 import Card from './Card';
@@ -56,7 +56,6 @@ class CardEditor extends Component {
     value: '',
     needsAttunement: false,
     selectRef: null,
-    showSearch: false,
   }
 
   constructor() {
@@ -67,6 +66,7 @@ class CardEditor extends Component {
     this.onChangeValue = onChange('value').bind(this);
     this.onChangeNeedsAttunement = onChange('needsAttunement').bind(this);
     this.onChangeCardType = onChange('cardType').bind(this);
+    this.iframeRef = this.useRef<HTMLElement>(null);
   }
 
   componentDidMount() {
@@ -116,13 +116,6 @@ class CardEditor extends Component {
       }, this.saveState);
     }
   }
-
-  onSetSearch = () => {
-    this.setState({
-      showSearch: !this.state.showSearch
-    })
-  }
-
   get cardTypeOptions() {
     return [
       {value: 'default', label: 'default'},
@@ -146,10 +139,9 @@ class CardEditor extends Component {
       type,
       value,
       selectRef,
-      showSearch,
     } = this.state;
     return (
-      <div className="container">
+      <div className="container" onDrop={this.onDropImg}>
         <div className="fields">
           <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
           <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
@@ -162,15 +154,12 @@ class CardEditor extends Component {
             Needs Attunement?
           </div>
           <div>
-          <input
-            className="fileInput"
-            accept="image/*"
-            type="file"
-            onChange={this.onImageChange}
-          />
-                    <button onClick={this.onSetSearch}>
-          Show search page
-        </button>
+            <input
+              className="fileInput"
+              accept="image/*"
+              type="file"
+              onChange={this.onImageChange}
+            />
         </div>
           <div className="buttons">
             <button onClick={this.onReset}>
@@ -182,10 +171,6 @@ class CardEditor extends Component {
           </div>
           {href && <a download="image.png" href={href}>Download</a>}
         </div>
-        {title && showSearch && 
-          <iframe src={`https://www.bing.com/images/search?q=${`5E ${title}`.replace(' ', '%20')}`} width={1000} height={500}>
-          </iframe>
-        }
         <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
       </div>
     );
