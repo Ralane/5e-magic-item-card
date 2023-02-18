@@ -2,12 +2,13 @@ import React, { Component, Fragment } from 'react';
 import * as R from 'ramda';
 import html2canvas from 'html2canvas';
 import Card from './Card';
+import IconSearch from './IconSearch';
 import './App.css';
 import debounce from 'lodash.debounce';
 import classnames from 'classnames';
 import magicItems from './assets/magic-items.json';
 import Select from 'react-select';
-import { title } from 'process';
+
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -20,13 +21,14 @@ const onChange = property => function({ target }) {
 
 const localStorage = window.localStorage;
 
+const defaultItem = 'Sword of Life Stealing';
 const defaultState = {
   cardType: 'default',
-  description: magicItems['Adamantine Armor'].description,
-  needsAttunement: magicItems['Adamantine Armor'].attunement,
-  title: 'Adamantine Armor',
-  type: magicItems['Adamantine Armor'].rarity,
-  imagePreviewUrl: undefined,
+  description: magicItems[defaultItem].description,
+  needsAttunement: magicItems[defaultItem].attunement,
+  title: defaultItem,
+  type: magicItems[defaultItem].rarity,
+  imagePreviewUrl: '/static/media/ancient-sword.9c0fe268.svg',
   value: '100',
   selectRef: null,
   showSearch: false,
@@ -73,6 +75,11 @@ class CardEditor extends Component {
     const cachedState = getSavedDate(this.props.localStorageKey);
     this.setState(cachedState || defaultState);
     setTimeout(() => this.forceUpdate(), 100);
+  }
+
+
+  componentWillMount() {
+      
   }
 
   saveState = () => {
@@ -172,6 +179,7 @@ class CardEditor extends Component {
           {href && <a download="image.png" href={href}>Download</a>}
         </div>
         <Card key={cardType} onRef={ref => this.ref = ref} {...this.state} />
+        <IconSearch></IconSearch>
       </div>
     );
   }
