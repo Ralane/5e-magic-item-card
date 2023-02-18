@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useRef } from 'react';
 import * as R from 'ramda';
 import html2canvas from 'html2canvas';
 import Card from './Card';
@@ -7,30 +7,15 @@ import debounce from 'lodash.debounce';
 import classnames from 'classnames';
 import magicItems from './assets/magic-items.json';
 import Select from 'react-select';
+import { title } from 'process';
 
 const onChange = property => function({ target }) {
   const value = target.type === 'checkbox' ? target.checked : target.value;
 
   this.setState({
     [property]: value,
-    'itemTemplatePreview': ''
+    selectRef: null,
   }, this.saveState);
-}
-
-const onChangeCardTemplate = property => function({ target }) {
-  if(target.value) {
-    this.setState({
-      ['itemTemplatePreview']: target.value,
-      ['title']: target.value,
-      ['type']: magicItems[target.value].type,
-      ['needsAttunement']: magicItems[target.value].attunement,
-      ['description']: magicItems[target.value].description,
-    }, this.saveState);
-  } else {
-    this.setState({
-      'itemTemplatePreview': ''
-    }, this.saveState);
-  }
 }
 
 const localStorage = window.localStorage;
@@ -39,11 +24,11 @@ const defaultState = {
   cardType: 'default',
   description: magicItems['Adamantine Armor'],
   needsAttunement: false,
-  itemTemplatePreview: '',
   title: 'Adamantine Armor',
   type: 'Uncommon',
   imagePreviewUrl: undefined,
   value: '100',
+  selectRef: null,
 };
 
 const saveData = debounce((key, data) => {
@@ -57,6 +42,7 @@ const getSavedDate = (key) => {
 }
 
 class CardEditor extends Component {
+  
   static defaultProps = {
     localStorageKey: 'card',
   }
@@ -64,11 +50,11 @@ class CardEditor extends Component {
   state = {
     cardType: 'default',
     title: '',
-    itemTemplatePreview: '',
     type: '',
     description: '',
     value: '',
     needsAttunement: false,
+    selectRef: null,
   }
 
   constructor() {
@@ -79,7 +65,6 @@ class CardEditor extends Component {
     this.onChangeValue = onChange('value').bind(this);
     this.onChangeNeedsAttunement = onChange('needsAttunement').bind(this);
     this.onChangeCardType = onChange('cardType').bind(this);
-    this.onChangeCardTemplate = onChangeCardTemplate('cardTemplate').bind(this);
   }
 
   componentDidMount() {
@@ -118,41 +103,47 @@ class CardEditor extends Component {
     reader.readAsDataURL(file)
   }
 
+  onChangeCardTemplate = (selected) => {
+    if(selected && selected.value) {
+      this.setState({
+        title: selected.value,
+        type: magicItems[selected.value].type,
+        needsAttunement: magicItems[selected.value].attunement,
+        description: magicItems[selected.value].description,
+        selectRef: selected,
+      }, this.saveState);
+    }
+  }
+
   get cardTypeOptions() {
     return [
-      'default',
-      'long',
+      {value: 'default', label: 'default'},
+      {value: 'long', label: 'long'},
     ];
   }
 
   get cardTemplateOptions() {
-    return ['', ...Object.keys(magicItems)];
+    return [...Object.keys(magicItems).map(title => {
+      return {value: title, label: title};
+    })];
   }
 
   render() {
     const {
       cardType,
-      itemTemplatePreview,
       description,
       href,
       needsAttunement,
       title,
       type,
       value,
+      selectRef,
     } = this.state;
     return (
       <div className="container">
         <div className="fields">
-          <Select value={cardType} onChange={this.onChangeCardType}>
-            {this.cardTypeOptions.map(option => (
-              <option value={option}>{option}</option>
-            ))}
-          </Select>
-          <Select value={itemTemplatePreview || ''} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template '}>
-            {this.cardTemplateOptions.map(option => (
-              <option value={option}>{option}</option>
-            ))}
-          </Select>
+          <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
+          <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
           <input value={title} onChange={this.onChangeTitle} />
           <input value={type} onChange={this.onChangeType} />
           <input value={value} onChange={this.onChangeValue} />
