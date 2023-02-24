@@ -59,7 +59,6 @@ class CardEditor extends Component {
     this.onChangeValue = onChange('value').bind(this);
     this.onChangeNeedsAttunement = onChange('needsAttunement').bind(this);
     this.onChangeCardType = onChange('cardType').bind(this);
-    this.iframeRef = this.useRef<HTMLElement>(null);
   }
 
   componentDidMount() {
@@ -153,7 +152,13 @@ class CardEditor extends Component {
               <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
               Needs Attunement?
             </div>
+            <IconSearch onImageChange={(e) => {
+                  this.setState({
+                    imagePreviewUrl: e
+                  }, this.saveState)
+                  }}></IconSearch>
             <div>
+              <h6>Or, upload a custom icon</h6>
               <input
                 className="fileInput"
                 accept="image/*"
