@@ -30,7 +30,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        submodules: 'true'
+        submodules: recursive
         token: ${{ secrets.PAT_TOKEN }}
     - run: npm run build --if-present
     - run: npm test
