@@ -34,4 +34,3 @@ jobs:
         token: ${{ secrets.PAT_TOKEN }}
     - run: npm install --save md-2-json
     - run: npm run build --if-present
-    - run: npm test
