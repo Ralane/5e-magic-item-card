@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/5e-magic-item-card/static/css/main.3b1131bb.css",
-    "main.js": "/5e-magic-item-card/static/js/main.41fb99d3.js",
+    "main.js": "/5e-magic-item-card/static/js/main.fcf00297.js",
     "static/media/card--default.png": "/5e-magic-item-card/static/media/card--default.9a4a6542e5a2e08c8229.png",
     "static/media/card--long.png": "/5e-magic-item-card/static/media/card--long.10181aaada67d7f968a4.png",
     "static/media/abstract-066.svg": "/5e-magic-item-card/static/media/abstract-066.de7e44bb98ab761aaf5e.svg",
@@ -4095,10 +4095,10 @@
     "static/media/plain-square.svg": "/5e-magic-item-card/static/media/plain-square.2be638dbf8403ebb9eff.svg",
     "static/media/electric.svg": "/5e-magic-item-card/static/media/electric.23d51b7b4943c8bbc1f7.svg",
     "main.3b1131bb.css.map": "/5e-magic-item-card/static/css/main.3b1131bb.css.map",
-    "main.41fb99d3.js.map": "/5e-magic-item-card/static/js/main.41fb99d3.js.map"
+    "main.fcf00297.js.map": "/5e-magic-item-card/static/js/main.fcf00297.js.map"
   },
   "entrypoints": [
     "static/css/main.3b1131bb.css",
-    "static/js/main.41fb99d3.js"
+    "static/js/main.fcf00297.js"
   ]
 }
