@@ -8,7 +8,7 @@ const importAll = (r) => {
 listOfImages = importAll(require.context('./icons', true, /\.(svg)$/));
 
 const defaultState = {
-    search: '',
+    search: 'Sword',
 };
 
 
@@ -24,7 +24,7 @@ class IconSearch extends Component {
     state = defaultState;
 
     itemList = () => {
-        return listOfImages.filter((e) => (!this.state.search || e.toString().includes(this.state.search))).slice(0, 50);
+        return listOfImages.filter((e) => (!this.state.search || e.toString().toLowerCase().includes(this.state.search.toLowerCase()))).slice(0, 50);
     }
 
     constructor({onImageChange}) {
@@ -39,6 +39,7 @@ class IconSearch extends Component {
           } = this.state;
         return <>
         <div>
+            <h6>Search icons</h6>
             <input placeholder={'Search icons'} value={search} onChange={this.onChangeSearch} />
             <div>
                 {
