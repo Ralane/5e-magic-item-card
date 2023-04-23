@@ -155,20 +155,24 @@ class CardEditor extends Component {
               <input type="checkbox" checked={needsAttunement} onChange={this.onChangeNeedsAttunement} />
               Needs Attunement?
             </div>
-            <IconSearch onImageChange={(e) => {
-                  this.setState({
-                    imagePreviewUrl: e
-                  }, this.saveState)
-                  }}></IconSearch>
-            <div>
-              <h6>Or, upload a custom icon</h6>
-              <input
-                className="fileInput"
-                accept="image/*"
-                type="file"
-                onChange={this.onImageChange}
-              />
-          </div>
+            {          
+              (cardType === 'default') && <>
+                  <IconSearch onImageChange={(e) => {
+                        this.setState({
+                          imagePreviewUrl: e
+                        }, this.saveState)
+                        }}></IconSearch>
+                  <div>
+                    <h6>Or, upload a custom icon</h6>
+                    <input
+                      className="fileInput"
+                      accept="image/*"
+                      type="file"
+                      onChange={this.onImageChange}
+                    />
+                  </div>
+                </>
+            }
             <div className="buttons">
               <button onClick={this.onReset}>
                 Reset
