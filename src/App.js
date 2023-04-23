@@ -58,18 +58,12 @@ class CardEditor extends Component {
     this.onChangeDescription = onChange('description').bind(this);
     this.onChangeValue = onChange('value').bind(this);
     this.onChangeNeedsAttunement = onChange('needsAttunement').bind(this);
-    this.onChangeCardType = onChange('cardType').bind(this);
   }
 
   componentDidMount() {
     const cachedState = getSavedDate(this.props.localStorageKey);
     this.setState(cachedState || defaultState);
     setTimeout(() => this.forceUpdate(), 100);
-  }
-
-
-  componentWillMount() {
-      
   }
 
   saveState = () => {
@@ -113,6 +107,15 @@ class CardEditor extends Component {
       }, this.saveState);
     }
   }
+
+  onChangeCardType = (selected) => {
+    if(selected && selected.value) {
+      this.setState({
+        cardType: selected.value
+      }, this.saveState);
+    }
+  }
+
   get cardTypeOptions() {
     return [
       {value: 'default', label: 'default'},
@@ -142,7 +145,7 @@ class CardEditor extends Component {
         <hr></hr>
         <div className="container">
           <div className="fields">
-            <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} />
+            <Select onChange={this.onChangeCardType} options={this.cardTypeOptions} placeholder={'Select Card Type...'} />
             <Select value={selectRef} onChange={this.onChangeCardTemplate} placeholder={'Select SRD Item Template...'} options={this.cardTemplateOptions} isSearchable={true} isClearable={true} />
             <input placeholder={'Title'} value={title} onChange={this.onChangeTitle} />
             <input placeholder={'Type'} value={type} onChange={this.onChangeType} />
